@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Crud;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Users\UpdateRequest;
 use App\Models\User;
+use App\Services\Contracts\CrudInterface;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+
 
 final class UserController extends Controller
 {
@@ -34,15 +36,9 @@ final class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, CrudInterface $crud): RedirectResponse
     {
-        $user = new User();
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->password = Hash::make($request->input('password'));
-
-        $user->save();
-
+        $crud->create($request->all());
         return redirect()->route('users.index');
     }
 
@@ -65,12 +61,9 @@ final class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user): RedirectResponse
+    public function update(UpdateRequest $request, User $user, CrudInterface $crud): RedirectResponse
     {
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-
-        $user->save();
+        $crud->update($user, $request->validated());
 
         return redirect()->route('users.index');
     }
@@ -78,10 +71,9 @@ final class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user): RedirectResponse
+    public function destroy(User $user, CrudInterface $crud): RedirectResponse
     {
-        $user->delete();
-
+       $crud->delete($user);
         return redirect()->route('users.index');
     }
 }
