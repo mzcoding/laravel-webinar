@@ -35,8 +35,8 @@
         </a>
         <div id="users" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('users.create') }}">{{ __('Добавить нового') }}</a>
-                <a class="collapse-item" href="{{ route('users.index') }}">{{ __('Список пользователей') }}</a>
+                <a class="collapse-item" href="{{ route('users.create', ['locale' => $locale]) }}">{{ __('Добавить нового') }}</a>
+                <a class="collapse-item" href="{{ route('users.index', ['locale' => $locale]) }}">{{ __('Список пользователей') }}</a>
             </div>
         </div>
     </li>

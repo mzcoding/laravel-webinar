@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Crud\UserController;
+use App\Http\Middleware\HasAdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function (\Illuminate\Http\Request $request) {
@@ -8,4 +9,6 @@ Route::get('/', function (\Illuminate\Http\Request $request) {
 });
 
 
-Route::resource('users', UserController::class);
+
+Route::resource('{locale}/users', UserController::class);
+   // ->middleware(HasAdminMiddleware::class);

@@ -1,16 +1,16 @@
 @extends('layouts.app')
 @section('title')
-    Пользователи
+    {{ __('Пользователи') }}
 @endsection
 
 @section('content')
     <table class="table table-bordered">
         <thead>
           <th>#ID</th>
-          <th>Имя</th>
+          <th>{{ __('Имя') }}</th>
           <th>E-mail</th>
-          <th>Дата регистрации</th>
-          <th>Управление</th>
+          <th>{{ __('Дата регистрации') }}</th>
+          <th>{{ __('Управление') }}</th>
         </thead>
 
         <tbody>
@@ -20,12 +20,12 @@
                   <td>{{ $user->name }}</td>
                   <td>{{ $user->email }}</td>
                   <td>{{ $user->created_at }}</td>
-                  <td><a href="{{ route('users.edit', ['user' => $user->id]) }}">Редактировать</a>
-                      &nbsp; <a href="javascript:;" class="delete" rel="{{ $user->id }}">Удаление</a></td>
+                  <td><a href="{{ route('users.edit', ['user' => $user->id, 'locale' => $locale]) }}">{{ __('Редактировать') }}</a>
+                      &nbsp; <a href="javascript:;" class="delete" rel="{{ $user->id }}">{{ __('Удаление') }}</a></td>
               </tr>
           @empty
               <tr>
-                  <td colspan="5"><h3>Записей не найдено</h3></td>
+                  <td colspan="5"><h3>{{ __('Записей не найдено') }}</h3></td>
               </tr>
           @endforelse
         </tbody>

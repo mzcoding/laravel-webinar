@@ -18,11 +18,24 @@ final class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(string $locale): View
     {
+        if ((int)request()->query('set') === 1) {
+            session()->put('locale', $locale);
+        }
+
+        if ((int)request()->query('d') === 1) {
+            session()->remove('locale');
+        }
+
+        app()->setLocale($locale);
         $users = User::query()->get();
 
-        return view('users.index', ['users' => $users]);
+        return view('users.index', [
+            'users' => $users,
+            'locale' => $locale,
+        ]);
+
     }
 
     /**
@@ -47,7 +60,6 @@ final class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
     }
 
     /**

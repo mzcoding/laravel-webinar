@@ -9,4 +9,5 @@ use App\Models\User;
 interface CrmIntegrationInterface
 {
    public function sendData(User $user): bool;
+
 }

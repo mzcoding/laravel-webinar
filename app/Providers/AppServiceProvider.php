@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Services\Contracts\CrmIntegrationInterface;
 use App\Services\Contracts\CrudInterface;
 use App\Services\UserCrmIntegration;
 use App\Services\UserService;

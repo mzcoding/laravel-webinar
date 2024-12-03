@@ -26,6 +26,22 @@ class UpdateRequest extends FormRequest
         return [
             'name'  => ['required', 'string', 'min:2', 'max:50'],
             'email' => ['required', 'string', 'email', 'max:50'],
+            /*'ids'   => ['required', 'array'],
+            'ids.*' => ['required', 'integer', 'exists:users,id'],*/
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required'  => 'Поле :attribute обязательно',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'name' => '"имя пользователя"'
         ];
     }
 
