@@ -27,7 +27,7 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
+    <li class="nav-item  @if(request()->is('users') || request()->is('users/*')) active @endif">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#users"
            aria-expanded="true" aria-controls="users">
             <i class="fas fa-fw fa-users"></i>
@@ -35,8 +35,8 @@
         </a>
         <div id="users" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="buttons.html">{{ __('Добавить нового') }}</a>
-                <a class="collapse-item" href="cards.html">{{ __('Список пользователей') }}</a>
+                <a class="collapse-item" href="{{ route('users.create') }}">{{ __('Добавить нового') }}</a>
+                <a class="collapse-item" href="{{ route('users.index') }}">{{ __('Список пользователей') }}</a>
             </div>
         </div>
     </li>
