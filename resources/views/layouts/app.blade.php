@@ -27,7 +27,7 @@
 <div id="wrapper">
 
     <!-- Sidebar -->
-    <x-sidebar></x-sidebar>
+    <x-sidebar :locale="$locale"></x-sidebar>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
