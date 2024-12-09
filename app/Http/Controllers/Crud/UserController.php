@@ -18,22 +18,15 @@ final class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(string $locale): View
+    public function index(): View
     {
-        if ((int)request()->query('set') === 1) {
-            session()->put('locale', $locale);
-        }
-
-        if ((int)request()->query('d') === 1) {
-            session()->remove('locale');
-        }
-
-        app()->setLocale($locale);
+        $crud = app(CrudInterface::class);
+        dd( $crud
+            ->resolve('DomainService'));
         $users = User::query()->get();
 
         return view('users.index', [
             'users' => $users,
-            'locale' => $locale,
         ]);
 
     }
@@ -75,6 +68,11 @@ final class UserController extends Controller
      */
     public function update(UpdateRequest $request, User $user, CrudInterface $crud): RedirectResponse
     {
+
+        $crud
+            ->resolve('UserService')
+            ->update($user, $request->validated());
+
         $crud->update($user, $request->validated());
 
         return redirect()->route('users.index');

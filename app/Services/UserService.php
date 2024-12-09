@@ -54,5 +54,10 @@ namespace App\Services;
              return false;
          }
      }
+
+     public function resolve(string $serviceClass): CrudInterface
+     {
+         // TODO: Implement resolve() method.
+     }
  }
 
