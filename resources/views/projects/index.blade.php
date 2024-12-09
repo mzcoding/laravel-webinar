@@ -1,28 +1,27 @@
 @extends('layouts.app')
 @section('title')
-    Пользователи
+    Проекты
 @endsection
 
-@dd($users)
 @section('content')
     <table class="table table-bordered">
         <thead>
           <th>#ID</th>
-          <th>Имя</th>
-          <th>E-mail</th>
+          <th>Пользователь</th>
+          <th>Наименование</th>
           <th>Дата регистрации</th>
           <th>Управление</th>
         </thead>
 
         <tbody>
-          @forelse($users as $user)
+          @forelse($projects as $project)
               <tr>
-                  <td>{{ $user->id }}</td>
-                  <td>{{ $user->name }}</td>
-                  <td>{{ $user->email }}</td>
-                  <td>{{ $user->created_at }}</td>
-                  <td><a href="{{ route('users.edit', ['user' => $user->id]) }}">Редактировать</a>
-                      &nbsp; <a href="javascript:;" class="delete" rel="{{ $user->id }}">Удаление</a></td>
+                  <td>{{ $project->id }}</td>
+                  <td>{{ $project->user_id }}</td>
+                  <td>{{ $project->name }}</td>
+                  <td>{{ $project->created_at }}</td>
+                  <td><a href="{{ route('projects.edit', ['project' => $project->id]) }}">Редактировать</a>
+                      &nbsp; <a href="javascript:;" class="delete" rel="{{ $project->id }}">Удаление</a></td>
               </tr>
           @empty
               <tr>
@@ -38,8 +37,8 @@
               items.forEach(function (item) {
                   item.addEventListener('click', function () {
                       const id = this.getAttribute('rel');
-                      if (confirm("Вы уверены что хотите удалить пользователя с #ID = " + id)) {
-                          fetch(`/users/${id}`, {
+                      if (confirm("Вы уверены что хотите удалить проект с #ID = " + id)) {
+                          fetch(`/projects/${id}`, {
                               method: "DELETE",
                               headers: {
                                   "X-CSRF-TOKEN": document.querySelector("meta[name='csrf-token']").getAttribute('content')

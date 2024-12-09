@@ -5,30 +5,29 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Crud;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Users\CreateRequest;
 use App\Http\Requests\Users\UpdateRequest;
 use App\Models\User;
+use App\Repository\UserRepository;
+use App\Repository\UserRepositoryInterface;
 use App\Services\Contracts\CrudInterface;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 
 final class UserController extends Controller
 {
+    public function __construct(private UserRepositoryInterface $userRepository) {}
     /**
      * Display a listing of the resource.
      */
     public function index(): View
     {
-        $crud = app(CrudInterface::class);
-        dd( $crud
-            ->resolve('DomainService'));
-        $users = User::query()->get();
-
         return view('users.index', [
-            'users' => $users,
+            'users' => $this->userRepository->list(),
         ]);
-
     }
 
     /**
@@ -42,16 +41,17 @@ final class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, CrudInterface $crud): RedirectResponse
+    public function store(CreateRequest $request): RedirectResponse
     {
-        $crud->create($request->all());
-        return redirect()->route('users.index');
+        $this->userRepository->create($request->validated());
+
+        return redirect()->route('users.index')->with('success', __('Пользователь успешно создан'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user): View
     {
     }
 
@@ -66,24 +66,24 @@ final class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, User $user, CrudInterface $crud): RedirectResponse
+    public function update(UpdateRequest $request, User $user): RedirectResponse
     {
+        $user = $this->userRepository->update($user, $request->validated());
+        if ($user) {
+            return redirect()->route('users.index')->with('success', __('Пользователь успешно обновлен'));
+        }
 
-        $crud
-            ->resolve('UserService')
-            ->update($user, $request->validated());
+        return back()->with('success', __('Не удалось сохранить пользователя'));
 
-        $crud->update($user, $request->validated());
-
-        return redirect()->route('users.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user, CrudInterface $crud): RedirectResponse
+    public function destroy(User $user): JsonResponse
     {
-       $crud->delete($user);
-        return redirect()->route('users.index');
+        $this->userRepository->delete($user);
+
+        return response()->json('ok');
     }
 }

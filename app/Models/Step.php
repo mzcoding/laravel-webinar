@@ -10,4 +10,16 @@ use Illuminate\Database\Eloquent\Model;
 final class Step extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'goal_id',
+        'name',
+        'started_at',
+        'finished_at',
+    ];
+
+    protected $casts = [
+        'started_at'  => 'immutable_datetime',
+        'finished_at' => 'immutable_datetime',
+    ];
 }

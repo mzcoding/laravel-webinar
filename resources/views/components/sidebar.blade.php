@@ -41,24 +41,20 @@
         </div>
     </li>
 
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-           aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-fw fa-wrench"></i>
-            <span>Utilities</span>
+    <li class="nav-item  @if(request()->is('projects') || request()->is('projects/*')) active @endif">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#projects"
+           aria-expanded="true" aria-controls="projects">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>{{ __('Проекты') }}</span>
         </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-             data-parent="#accordionSidebar">
+        <div id="projects" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Custom Utilities:</h6>
-                <a class="collapse-item" href="utilities-color.html">Colors</a>
-                <a class="collapse-item" href="utilities-border.html">Borders</a>
-                <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                <a class="collapse-item" href="utilities-other.html">Other</a>
+                <a class="collapse-item" href="{{ route('projects.create') }}">{{ __('Добавить новый') }}</a>
+                <a class="collapse-item" href="{{ route('projects.index') }}">{{ __('Список проектов') }}</a>
             </div>
         </div>
     </li>
+
 
     <!-- Divider -->
     <hr class="sidebar-divider">

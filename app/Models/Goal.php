@@ -10,4 +10,10 @@ use Illuminate\Database\Eloquent\Model;
 final class Goal extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'project_id',
+        'name',
+        'term_in_months',
+    ];
 }
