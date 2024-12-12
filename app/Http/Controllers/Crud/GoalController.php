@@ -1,12 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Crud;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Goals\CreateRequest;
+use App\Models\Goal;
+use App\Repository\GoalRepository;
+use App\Repository\GoalRepositoryInterface;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class GoalController extends Controller
+final class GoalController extends Controller
 {
+    public function __construct(private GoalRepositoryInterface $goalRepository)
+    {
+
+    }
     /**
      * Display a listing of the resource.
      */
@@ -18,25 +30,30 @@ class GoalController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('goals.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request): RedirectResponse
     {
-        //
+         $goal = $this->goalRepository->create($request->validated());
+
+         return redirect()->route('projects.show', ['project' => $goal->project_id])
+             ->with('success',  __('Цель успешно добавлена'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Goal $goal): View
     {
-        //
+        return view('goals.show', [
+            'goal' => $goal,
+        ]);
     }
 
     /**

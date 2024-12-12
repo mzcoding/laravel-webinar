@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class Step extends Model
 {
@@ -22,4 +23,9 @@ final class Step extends Model
         'started_at'  => 'immutable_datetime',
         'finished_at' => 'immutable_datetime',
     ];
+
+    public function goal(): BelongsTo
+    {
+        return $this->belongsTo(Goal::class);
+    }
 }

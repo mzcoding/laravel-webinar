@@ -3,7 +3,6 @@
     Пользователи
 @endsection
 
-@dd($users)
 @section('content')
     <table class="table table-bordered">
         <thead>
@@ -18,7 +17,7 @@
           @forelse($users as $user)
               <tr>
                   <td>{{ $user->id }}</td>
-                  <td>{{ $user->name }}</td>
+                  <td>{{ $user->name }} {{ $user->last_name }}</td>
                   <td>{{ $user->email }}</td>
                   <td>{{ $user->created_at }}</td>
                   <td><a href="{{ route('users.edit', ['user' => $user->id]) }}">Редактировать</a>

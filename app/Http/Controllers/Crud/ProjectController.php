@@ -57,7 +57,13 @@ final class ProjectController extends Controller
      */
     public function show(Project $project): View
     {
-        //
+        return view('projects.show', [
+            'project' => $project,
+            'report'  => [
+                'href' => route('projects.edit', $project),
+                'text' => __('Редактировать')
+            ]
+        ]);
     }
 
     /**

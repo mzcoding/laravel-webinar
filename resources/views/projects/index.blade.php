@@ -17,11 +17,15 @@
           @forelse($projects as $project)
               <tr>
                   <td>{{ $project->id }}</td>
-                  <td>{{ $project->user_id }}</td>
+                  <td>{{ $project->user->last_name }}, {{ $project->user->name }} ({{ $project->user->email }})</td>
                   <td>{{ $project->name }}</td>
                   <td>{{ $project->created_at }}</td>
-                  <td><a href="{{ route('projects.edit', ['project' => $project->id]) }}">Редактировать</a>
-                      &nbsp; <a href="javascript:;" class="delete" rel="{{ $project->id }}">Удаление</a></td>
+                  <td>
+                      <a href="{{ route('projects.show', ['project' => $project->id]) }}" style="color:green;">Подробнее</a>
+                      &nbsp;
+                      <a href="{{ route('projects.edit', ['project' => $project->id]) }}">Редактировать</a>
+                      &nbsp; <a href="javascript:;" style="color:red;" class="delete" rel="{{ $project->id }}">Удалить</a>
+                  </td>
               </tr>
           @empty
               <tr>

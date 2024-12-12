@@ -7,6 +7,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class Project extends Model
 {
@@ -19,10 +22,20 @@ final class Project extends Model
         'image',
     ];
 
-    /*protected function name(): Attribute
+
+    public function user(): BelongsTo
     {
-        return Attribute::make(
-            get: fn (string $value) => mb_strtoupper($value),
-        );
-    }*/
+        return $this->belongsTo(User::class);
+    }
+
+    public function goals(): HasMany
+    {
+        return $this->hasMany(Goal::class);
+    }
+
+    public function exampleGoals(): BelongsToMany
+    {
+         return $this->belongsToMany(Goal::class, 'projects_goals_example')
+             ->withPivot('completed_percentage');
+    }
 }

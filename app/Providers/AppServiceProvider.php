@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\Goal;
 use App\Models\Project;
 use App\Models\User;
+use App\Repository\GoalRepository;
+use App\Repository\GoalRepositoryInterface;
 use App\Repository\ProjectRepository;
 use App\Repository\ProjectRepositoryInterface;
 use App\Repository\UserRepository;
@@ -24,6 +27,9 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(ProjectRepositoryInterface::class,
             fn() => new ProjectRepository(new Project));
+
+        $this->app->singleton(GoalRepositoryInterface::class,
+            fn() => new GoalRepository(new Goal));
     }
 
     /**
