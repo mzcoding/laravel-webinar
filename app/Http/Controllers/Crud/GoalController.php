@@ -6,19 +6,22 @@ namespace App\Http\Controllers\Crud;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Goals\CreateRequest;
+use App\Http\Requests\Goals\UpdateRequest;
 use App\Models\Goal;
 use App\Repository\GoalRepository;
 use App\Repository\GoalRepositoryInterface;
+use App\Repository\ProjectRepositoryInterface;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 final class GoalController extends Controller
 {
-    public function __construct(private GoalRepositoryInterface $goalRepository)
-    {
-
-    }
+    public function __construct(
+        private ProjectRepositoryInterface $projectRepository,
+        private GoalRepositoryInterface $goalRepository
+    ) {}
     /**
      * Display a listing of the resource.
      */
@@ -59,24 +62,39 @@ final class GoalController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Goal $goal): View
     {
-        //
+        return view('goals.edit', [
+            'projects' => $this->projectRepository->list(),
+            'goal' => $goal,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRequest $request, Goal $goal): RedirectResponse
     {
-        //
+        $status = $this->goalRepository->update($goal, $request->validated());
+        if ($status) {
+            return redirect()->route('projects.show', ['project' => $goal->project_id])
+                ->with('success', __('Цель успешно обновлена'));
+        }
+
+        return back()->with('error', __('Не удалось обновить цель'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Goal $goal): JsonResponse
     {
-        //
+        try {
+            $this->goalRepository->delete($goal);
+
+            return response()->json('ok');
+        } catch (\Throwable $exception) {
+            return response()->json(['error' => $exception->getMessage()], 500);
+        }
     }
 }

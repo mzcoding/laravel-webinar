@@ -6,13 +6,17 @@ namespace App\Providers;
 
 use App\Models\Goal;
 use App\Models\Project;
+use App\Models\Step;
 use App\Models\User;
 use App\Repository\GoalRepository;
 use App\Repository\GoalRepositoryInterface;
 use App\Repository\ProjectRepository;
 use App\Repository\ProjectRepositoryInterface;
+use App\Repository\StepRepository;
+use App\Repository\StepRepositoryInterface;
 use App\Repository\UserRepository;
 use App\Repository\UserRepositoryInterface;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,6 +34,9 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(GoalRepositoryInterface::class,
             fn() => new GoalRepository(new Goal));
+
+        $this->app->singleton(StepRepositoryInterface::class,
+            fn() => new StepRepository(new Step));
     }
 
     /**
@@ -37,6 +44,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Relation::enforceMorphMap([
+            'post' => 'App\Models\Post',
+            'video' => 'App\Models\Video',
+        ]);
     }
 }

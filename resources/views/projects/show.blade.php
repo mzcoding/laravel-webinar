@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.main')
 @section('title')
     Проект №{{ $project->id }} ({{$project->name}})
 @endsection
@@ -39,7 +39,8 @@
                       <td>{{ $goal->name }}</td>
                       <td>{{ $goal->term_in_months }}</td>
                       <td>{{ $goal->created_at }}</td>
-                      <td><a href="{{ route('goals.show', ['goal' => $goal]) }}" style="color: green;">Подробнее</a> &nbsp; <a href="">Редактировать</a> &nbsp; <a style="color:red;" href="">Удалить</a> </td>
+                      <td><a href="{{ route('goals.show', ['goal' => $goal]) }}" style="color: green;">Подробнее</a> &nbsp; <a href="{{ route('goals.edit', ['goal' => $goal]) }}">Редактировать</a> &nbsp;
+                          <a rel="{{ $goal->id }}" style="color:red;" class="delete" href="javascript:;">Удалить</a> </td>
                   </tr>
               @empty
                   <tr>
@@ -49,4 +50,28 @@
             </tbody>
         </table>
     </div>
+
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            const items = document.querySelectorAll('.delete');
+            items.forEach(function (item) {
+                item.addEventListener('click', function () {
+                    const id = this.getAttribute('rel');
+                    if (confirm("Вы уверены что хотите удалить цель с #ID = " + id)) {
+                        fetch(`/goals/${id}`, {
+                            method: "DELETE",
+                            headers: {
+                                "X-CSRF-TOKEN": document.querySelector("meta[name='csrf-token']").getAttribute('content')
+                            }
+                        }).then(response => {
+                            location.reload();
+                        });
+                    } else {
+                        alert('Удаление отменено');
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
