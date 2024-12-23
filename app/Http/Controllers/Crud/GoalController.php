@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Crud;
 
+use App\Events\CreatedGoal;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Goals\CreateRequest;
 use App\Http\Requests\Goals\UpdateRequest;
@@ -44,6 +45,7 @@ final class GoalController extends Controller
     public function store(CreateRequest $request): RedirectResponse
     {
          $goal = $this->goalRepository->create($request->validated());
+         event(new CreatedGoal($goal));
 
          return redirect()->route('projects.show', ['project' => $goal->project_id])
              ->with('success',  __('Цель успешно добавлена'));

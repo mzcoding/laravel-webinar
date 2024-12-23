@@ -17,7 +17,7 @@ class HasAdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ((int) $request->query('is_admin') === 1) {
+        if (auth()->user()->is_admin === true) {
             return $next($request);
         }
 
