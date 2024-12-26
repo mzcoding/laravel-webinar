@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Events\CreatedGoal;
+use App\Events\SocialUserEvent;
 use App\Listeners\SendEmailListener;
+use App\Listeners\SendGeneratedPasswordListener;
+use App\Listeners\SyncNetworksTableListener;
 use App\Models\Goal;
 use App\Models\Project;
 use App\Models\Step;
@@ -18,6 +21,8 @@ use App\Repository\StepRepository;
 use App\Repository\StepRepositoryInterface;
 use App\Repository\UserRepository;
 use App\Repository\UserRepositoryInterface;
+use App\Services\SocialUser;
+use App\Services\SocialUserInterface;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
@@ -40,6 +45,8 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(StepRepositoryInterface::class,
             fn() => new StepRepository(new Step));
+
+        $this->app->bind(SocialUserInterface::class, fn() => new SocialUser());
     }
 
     /**
@@ -55,5 +62,14 @@ class AppServiceProvider extends ServiceProvider
         Event::listen([
             CreatedGoal::class => SendEmailListener::class,
         ]);
+
+        Event::listen(SocialUserEvent::class, [
+             SendGeneratedPasswordListener::class,
+             SyncNetworksTableListener::class,
+        ]);
+
+        Event::listen(function (\SocialiteProviders\Manager\SocialiteWasCalled $event) {
+            $event->extendSocialite('github', \SocialiteProviders\GitHub\Provider::class);
+        });
     }
 }

@@ -66,6 +66,11 @@ class User extends Authenticatable
         return $this->hasMany(Project::class, 'user_id', 'id');
     }
 
+    public function networks(): HasMany
+    {
+        return $this->hasMany(Network::class, 'user_id');
+    }
+
     public function allGoals(): HasManyThrough
     {
         return $this->hasManyThrough(Goal::class, Project::class);
