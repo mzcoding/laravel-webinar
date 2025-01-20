@@ -24,6 +24,7 @@ use App\Repository\UserRepositoryInterface;
 use App\Services\SocialUser;
 use App\Services\SocialUserInterface;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
@@ -71,5 +72,7 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(function (\SocialiteProviders\Manager\SocialiteWasCalled $event) {
             $event->extendSocialite('github', \SocialiteProviders\GitHub\Provider::class);
         });
+
+        JsonResource::withoutWrapping();
     }
 }

@@ -11,7 +11,8 @@
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.9",
-        "socialiteproviders/github": "^4.1"
+        "socialiteproviders/github": "^4.1",
+        "tymon/jwt-auth": "^2.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.14",

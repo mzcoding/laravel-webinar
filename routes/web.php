@@ -27,4 +27,3 @@ Route::middleware('auth')->group(function () {
        Route::resource('/steps', StepController::class);
     });
 });
-
