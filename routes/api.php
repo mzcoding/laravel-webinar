@@ -24,3 +24,8 @@ Route::group([
 Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('projects', ProjectController::class);
 });
+
+
+Route::get('/users', function () {
+    return new \App\Http\Resources\UserCollection(\App\Models\User::paginate(10));
+});

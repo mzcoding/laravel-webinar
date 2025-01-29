@@ -21,8 +21,11 @@ use App\Repository\StepRepository;
 use App\Repository\StepRepositoryInterface;
 use App\Repository\UserRepository;
 use App\Repository\UserRepositoryInterface;
+use App\Services\Cache\CacheInterface;
+use App\Services\Cache\CacheService;
 use App\Services\SocialUser;
 use App\Services\SocialUserInterface;
+use Illuminate\Contracts\Auth\Factory as AuthFactory;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Event;
@@ -47,7 +50,14 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(StepRepositoryInterface::class,
             fn() => new StepRepository(new Step));
 
-        $this->app->bind(SocialUserInterface::class, fn() => new SocialUser());
+        $this->app->bind(SocialUserInterface::class, fn() => new SocialUser(
+            $this->app->make(AuthFactory::class)
+        ));
+
+        $this->app->bind(CacheInterface::class, fn() => new CacheService(
+            $this->app->make('cache'),
+            config('cache.default')
+        ));
     }
 
     /**

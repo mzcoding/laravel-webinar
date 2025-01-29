@@ -8,18 +8,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Projects\CreateRequest;
 use App\Http\Requests\Projects\UpdateRequest;
 use App\Models\Project;
-use App\Models\User;
 use App\Repository\ProjectRepositoryInterface;
 use App\Repository\UserRepositoryInterface;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 final class ProjectController extends Controller
 {
     public function __construct(
-        private USerRepositoryInterface $userRepository,
+        private UserRepositoryInterface $userRepository,
         private ProjectRepositoryInterface $projectRepository
     ) {}
     /**
