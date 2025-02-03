@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Mail;
 
-use App\Models\Goal;
+use App\Models\Project;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -12,15 +12,16 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-final class GoalMail extends Mailable
+class ProjectMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(public Goal $goal)
-    {
+    public function __construct(
+        public readonly Project $project,
+    ) {
         //
     }
 
@@ -30,7 +31,7 @@ final class GoalMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Новая цель',
+            subject: 'Добавлен новый проект',
         );
     }
 
@@ -40,7 +41,7 @@ final class GoalMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.goal',
+            view: 'emails.project',
         );
     }
 
