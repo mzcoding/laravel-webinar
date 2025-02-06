@@ -19,6 +19,11 @@
                    <td>Описание:</td>
                    <td>{{ $project->description }}</td>
                </tr>
+               @if ($project->image)
+               <tr>
+                   <td colspan="2"><img src="{{ Storage::disk('public')->url($project->image) }}" /> </td>
+               </tr>
+               @endif
             </tbody>
         </table>
         <br>

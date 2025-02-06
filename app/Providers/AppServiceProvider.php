@@ -23,6 +23,7 @@ use App\Repository\UserRepository;
 use App\Repository\UserRepositoryInterface;
 use App\Services\Cache\CacheInterface;
 use App\Services\Cache\CacheService;
+use App\Services\FileUpload;
 use App\Services\SocialUser;
 use App\Services\SocialUserInterface;
 use Illuminate\Contracts\Auth\Factory as AuthFactory;
@@ -58,6 +59,8 @@ class AppServiceProvider extends ServiceProvider
             $this->app->make('cache'),
             config('cache.default')
         ));
+
+        $this->app->bind(FileUpload::class, fn() => new FileUpload());
     }
 
     /**

@@ -12,6 +12,7 @@ use App\Models\Project;
 use App\Notifications\StatNotification;
 use App\Repository\ProjectRepositoryInterface;
 use App\Repository\UserRepositoryInterface;
+use App\Services\FileUpload;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Mail;
 final class ProjectController extends Controller
 {
     public function __construct(
+        private FileUpload $fileUpload,
         private UserRepositoryInterface $userRepository,
         private ProjectRepositoryInterface $projectRepository
     ) {}
@@ -46,10 +48,18 @@ final class ProjectController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @throws \Exception
      */
     public function store(CreateRequest $request): RedirectResponse
     {
         $project = $this->projectRepository->create($request->validated());
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            if ($file->isValid()) {
+                $this->projectRepository->saveImage($project, $this->fileUpload->upload($file, $project));
+            }
+        }
+
         Mail::to($project->user)->send(new ProjectMail($project));
 
         return redirect()->route('projects.index')->with('success', __('Проект успешно создан'));
@@ -82,11 +92,31 @@ final class ProjectController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @throws \Exception
      */
     public function update(UpdateRequest $request, Project $project): RedirectResponse
     {
-        $status = $this->projectRepository->update($project, $request->validated());
+        $data = $request->validated();
+        unset($data['image']);
+
+        $status = $this->projectRepository->update($project, $data);
+
         if ($status) {
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                if ($file->isValid()) {
+                    $link = $this->fileUpload->upload(
+                        $file,
+                        $project
+                    );
+
+                    $this->projectRepository->saveImage(
+                        $project,
+                        $link
+                    );
+                }
+            }
+
             $delay = now()->addMinutes(5);
             $user = $project->user ?? Auth::user();
             $user->notify((new StatNotification($project))->delay($delay));
