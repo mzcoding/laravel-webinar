@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 final class AuthController extends Controller
 {
@@ -16,7 +20,24 @@ final class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        //$this->middleware('auth:api', ['except' => ['login']]);
+    }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
+        ]);
+
+        $user = User::query()->create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return response()->json(['token' => $user->createToken('API Token')->plainTextToken], 201);
     }
 
     /**
@@ -24,7 +45,7 @@ final class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login()
+    public function login(Request $request)
     {
         $credentials = request(['email', 'password']);
 

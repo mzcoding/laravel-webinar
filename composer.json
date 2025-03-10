@@ -12,8 +12,7 @@
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.9",
         "predis/predis": "^2.3",
-        "socialiteproviders/github": "^4.1",
-        "tymon/jwt-auth": "^2.1"
+        "socialiteproviders/github": "^4.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.14",

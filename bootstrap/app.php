@@ -16,9 +16,15 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             'users',
             'users/*',
+            'login',
         ]);
 
         $middleware->alias(['has_admin' => HasAdminMiddleware::class]);
+    })
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->api(prepend: [
+            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
