@@ -35,14 +35,12 @@
 
         <!-- Main Content -->
         <div id="content">
-
             <!-- Topbar -->
             <x-topbar></x-topbar>
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">@section('title') @show</h1>
@@ -51,7 +49,11 @@
                     @endif
                 </div>
 
-
+                @if(session()->has('success'))
+                <div class="alert alert-success">
+                    {{ session()->get('success') }}
+                </div>
+                @endif
                 <!-- Content Row -->
 
                 @yield('content')
