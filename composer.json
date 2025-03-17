@@ -13,7 +13,8 @@
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.9",
         "predis/predis": "^2.3",
-        "socialiteproviders/github": "^4.1"
+        "socialiteproviders/github": "^4.1",
+        "php-amqplib/php-amqplib": "^3.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.14",
