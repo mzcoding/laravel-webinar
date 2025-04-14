@@ -22,7 +22,7 @@ final readonly class CacheService implements CacheInterface
         return $this->cache->store($this->driver)->get($key, $defaultValue);
     }
 
-    public function set(string $key, mixed $value, int $ttl = null): void
+    public function set(string $key, mixed $value, int|null $ttl = 100): void
     {
         $this->cache->store($this->driver)->put($key, $value, $ttl);
     }
