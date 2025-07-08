@@ -8,11 +8,9 @@ use App\Models\Project;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-final  class ProjectRepository extends BaseRepository implements ProjectRepositoryInterface
+final class ProjectRepository extends BaseRepository implements ProjectRepositoryInterface
 {
-    public function __construct(protected Model $model)
-    {
-    }
+    public function __construct(protected Model $model) {}
 
     public function saveImage(Project $project, string $linkToImage): void
     {
@@ -32,5 +30,4 @@ final  class ProjectRepository extends BaseRepository implements ProjectReposito
             ->with('user')
             ->get();
     }
-
 }

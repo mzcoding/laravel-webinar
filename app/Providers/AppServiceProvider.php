@@ -41,28 +41,28 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(UserRepositoryInterface::class,
-            fn() => new UserRepository(new User));
+            fn () => new UserRepository(new User));
 
         $this->app->singleton(ProjectRepositoryInterface::class,
-            fn() => new ProjectRepository(new Project));
+            fn () => new ProjectRepository(new Project));
 
         $this->app->singleton(GoalRepositoryInterface::class,
-            fn() => new GoalRepository(new Goal));
+            fn () => new GoalRepository(new Goal));
 
         $this->app->singleton(StepRepositoryInterface::class,
-            fn() => new StepRepository(new Step));
+            fn () => new StepRepository(new Step));
 
-        $this->app->bind(SocialUserInterface::class, fn() => new SocialUser(
+        $this->app->bind(SocialUserInterface::class, fn () => new SocialUser(
             $this->app->make(AuthFactory::class)
         ));
 
-        $this->app->bind(CacheInterface::class, fn() => new CacheService(
+        $this->app->bind(CacheInterface::class, fn () => new CacheService(
             $this->app->make('cache'),
             config('cache.default')
         ));
 
-        $this->app->bind(FileUpload::class, fn() => new FileUpload());
-        $this->app->bind(RabbitMqService::class, fn() => new RabbitMqService(
+        $this->app->bind(FileUpload::class, fn () => new FileUpload);
+        $this->app->bind(RabbitMqService::class, fn () => new RabbitMqService(
             config('rabbitmq.host'),
             (int) config('rabbitmq.port'),
             config('rabbitmq.user'),
@@ -85,8 +85,8 @@ class AppServiceProvider extends ServiceProvider
         ]);
 
         Event::listen(SocialUserEvent::class, [
-             SendGeneratedPasswordListener::class,
-             SyncNetworksTableListener::class,
+            SendGeneratedPasswordListener::class,
+            SyncNetworksTableListener::class,
         ]);
 
         Event::listen(function (\SocialiteProviders\Manager\SocialiteWasCalled $event) {

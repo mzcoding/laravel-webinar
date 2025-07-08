@@ -23,8 +23,8 @@ class StepFactory extends Factory
         return [
             'goal_id' => Goal::factory()->create(),
             'name' => $this->faker->name(),
-            'started_at'  => CarbonImmutable::now(),
-            'finished_at'   => CarbonImmutable::now()->addWeek(),
+            'started_at' => CarbonImmutable::now(),
+            'finished_at' => CarbonImmutable::now()->addWeek(),
         ];
     }
 }

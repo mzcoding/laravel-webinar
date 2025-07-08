@@ -8,18 +8,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\CreateRequest;
 use App\Http\Requests\Users\UpdateRequest;
 use App\Models\User;
-use App\Repository\UserRepository;
 use App\Repository\UserRepositoryInterface;
-use App\Services\Contracts\CrudInterface;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-
 
 final class UserController extends Controller
 {
     public function __construct(private UserRepositoryInterface $userRepository) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -51,9 +48,7 @@ final class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user): View
-    {
-    }
+    public function show(User $user): View {}
 
     /**
      * Show the form for editing the specified resource.

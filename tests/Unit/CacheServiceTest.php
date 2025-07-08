@@ -11,6 +11,7 @@ class CacheServiceTest extends TestCase
 {
     /**
      * A basic unit test example.
+     *
      * @throws InvalidArgumentException
      */
     public function test_should_received_store(): void

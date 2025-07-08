@@ -8,5 +8,5 @@ use App\Services\Contracts\CrudInterface;
 
 interface CrudResolverInterface
 {
-   public function resolve(string $serviceClass): CrudInterface;
+    public function resolve(string $serviceClass): CrudInterface;
 }

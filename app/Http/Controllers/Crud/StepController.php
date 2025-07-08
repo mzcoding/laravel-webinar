@@ -12,11 +12,11 @@ use App\Repository\StepRepositoryInterface;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 final class StepController extends Controller
 {
     public function __construct(private StepRepositoryInterface $repository) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -66,12 +66,12 @@ final class StepController extends Controller
      */
     public function update(UpdateRequest $request, Step $step): RedirectResponse
     {
-       $status =  $this->repository->update($step, $request->validated());
-       if ($status) {
-           return redirect()->route('goals.show', ['goal' => $step->goal_id]);
-       }
+        $status = $this->repository->update($step, $request->validated());
+        if ($status) {
+            return redirect()->route('goals.show', ['goal' => $step->goal_id]);
+        }
 
-       return redirect()->back();
+        return redirect()->back();
     }
 
     /**

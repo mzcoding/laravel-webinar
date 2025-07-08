@@ -27,7 +27,6 @@ final class ExportProjectsJob implements ShouldQueue
             $data[] = [$project->id, $project->name];
         }
 
-
         $fp = fopen(storage_path('/app/private/projects.csv'), 'w');
 
         foreach ($data as $fields) {

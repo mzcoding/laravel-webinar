@@ -59,7 +59,7 @@ class User extends Authenticatable
 
     public function name(): Attribute
     {
-        return Attribute::make(get: fn($value) => mb_ucfirst($value));
+        return Attribute::make(get: fn ($value) => mb_ucfirst($value));
     }
 
     public function projects(): HasMany
@@ -77,12 +77,10 @@ class User extends Authenticatable
         return $this->hasManyThrough(Goal::class, Project::class);
     }
 
-
     public function scopeAdmin(Builder $query): void
     {
         $query->where('is_admin', 1);
     }
-
 
     // TODO: Drop it
     public function getJWTIdentifier()

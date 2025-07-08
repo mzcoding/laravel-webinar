@@ -11,14 +11,12 @@ use Illuminate\Database\Eloquent\Model;
 final class CrudResolver implements CrudInterface
 {
     private CrudInterface $crud;
-    public function __construct(private CrmIntegrationInterface $crmIntegration)
-    {
 
-    }
+    public function __construct(private CrmIntegrationInterface $crmIntegration) {}
 
     public function create(array $data): Model
     {
-       return $this->crud->create($data);
+        return $this->crud->create($data);
     }
 
     public function update(Model $model, array $data): Model
@@ -33,7 +31,7 @@ final class CrudResolver implements CrudInterface
 
     public function resolve(string $serviceClass): CrudInterface
     {
-        $className = "\\App\\Services\\" . $serviceClass;
+        $className = '\\App\\Services\\'.$serviceClass;
         $this->crud = new $className($this->crmIntegration);
 
         return $this;

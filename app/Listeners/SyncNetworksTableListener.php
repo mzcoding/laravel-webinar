@@ -6,8 +6,6 @@ namespace App\Listeners;
 
 use App\Events\SocialUserEvent;
 use App\Models\Network;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 final class SyncNetworksTableListener
 {

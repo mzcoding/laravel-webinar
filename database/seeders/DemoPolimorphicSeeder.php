@@ -7,7 +7,6 @@ namespace Database\Seeders;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Video;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DemoPolimorphicSeeder extends Seeder
@@ -46,7 +45,6 @@ class DemoPolimorphicSeeder extends Seeder
             ['name' => 'Tag 4'],
             ['name' => 'Tag 5'],
         ];
-
 
         Tag::query()->insert($tags);
     }

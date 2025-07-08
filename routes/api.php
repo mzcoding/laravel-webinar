@@ -19,13 +19,9 @@ Route::group(['middleware' => 'api'], function () {
     });
 });
 
-
 Route::group([
-    'prefix' => 'auth'
+    'prefix' => 'auth',
 ], function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
 });
-
-
-

@@ -6,7 +6,6 @@ namespace App\Notifications;
 
 use App\Models\Project;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -38,10 +37,10 @@ final class StatNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->greeting('Hello!')
-                    ->line('Нотификация для проекта ' . $this->project->name )
-                    ->action('Кликай', route('projects.show', $this->project))
-                    ->line(' Спасибо что прочли нотификацию!');
+            ->greeting('Hello!')
+            ->line('Нотификация для проекта '.$this->project->name)
+            ->action('Кликай', route('projects.show', $this->project))
+            ->line(' Спасибо что прочли нотификацию!');
     }
 
     /**

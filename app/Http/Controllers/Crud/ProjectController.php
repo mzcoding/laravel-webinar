@@ -26,6 +26,7 @@ final class ProjectController extends Controller
         private UserRepositoryInterface $userRepository,
         private ProjectRepositoryInterface $projectRepository
     ) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -40,7 +41,7 @@ final class ProjectController extends Controller
      * Show the form for creating a new resource.
      */
     public function create(): View
-    {;
+    {
         return view('projects.create', [
             'users' => $this->userRepository->list(),
         ]);
@@ -48,6 +49,7 @@ final class ProjectController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
      * @throws \Exception
      */
     public function store(CreateRequest $request): RedirectResponse
@@ -72,10 +74,10 @@ final class ProjectController extends Controller
     {
         return view('projects.show', [
             'project' => $project,
-            'report'  => [
+            'report' => [
                 'href' => route('projects.edit', $project),
-                'text' => __('Редактировать')
-            ]
+                'text' => __('Редактировать'),
+            ],
         ]);
     }
 
@@ -92,6 +94,7 @@ final class ProjectController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
      * @throws \Exception
      */
     public function update(UpdateRequest $request, Project $project): RedirectResponse
@@ -120,6 +123,7 @@ final class ProjectController extends Controller
             $delay = now()->addMinutes(5);
             $user = $project->user ?? Auth::user();
             $user->notify((new StatNotification($project))->delay($delay));
+
             return redirect()->route('projects.index')->with('success', __('Проект успешно обновлен'));
         }
 

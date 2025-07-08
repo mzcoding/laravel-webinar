@@ -6,9 +6,7 @@ namespace App\Repository;
 
 use Illuminate\Database\Eloquent\Model;
 
-final class UserRepository extends BaseRepository implements  UserRepositoryInterface
+final class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
-    public function __construct(protected Model $model)
-    {
-    }
+    public function __construct(protected Model $model) {}
 }

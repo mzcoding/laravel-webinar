@@ -26,7 +26,7 @@ final class CreateRequest extends FormRequest
         return [
             'project_id' => ['required', 'integer', 'exists:projects,id'],
             'name' => ['required', 'string'],
-            'term_in_months' => ['required', 'integer', 'min:1', 'max:60']
+            'term_in_months' => ['required', 'integer', 'min:1', 'max:60'],
         ];
     }
 

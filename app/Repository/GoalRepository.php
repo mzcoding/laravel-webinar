@@ -8,7 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 
 final class GoalRepository extends BaseRepository implements GoalRepositoryInterface
 {
-    public function __construct(protected Model $model)
-    {
-    }
+    public function __construct(protected Model $model) {}
 }

@@ -25,7 +25,7 @@ class CreateRequest extends FormRequest
     {
         return [
             'user_id' => ['required', 'integer', 'exists:users,id'],
-            'name'  => ['required', 'string', 'max:155'],
+            'name' => ['required', 'string', 'max:155'],
             'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg'],
             'description' => ['nullable', 'string'],
         ];
