@@ -17,7 +17,10 @@ final class CreatedGoal
     /**
      * Create a new event instance.
      */
-    public function __construct(public Goal $goal) {}
+    public function __construct(public Goal $goal)
+    {
+
+    }
 
     /**
      * Get the channels the event should broadcast on.
