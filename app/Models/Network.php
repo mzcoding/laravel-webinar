@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 final class Network extends Model
 {
     protected $table = 'networks';
+
     protected $fillable = [
         'user_id',
         'network_type',

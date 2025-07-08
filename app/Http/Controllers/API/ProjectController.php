@@ -21,7 +21,6 @@ class ProjectController extends Controller
         private ProjectRepositoryInterface $projectRepository
     ) {}
 
-
     /**
      * Display a listing of the resource.
      */
@@ -57,7 +56,6 @@ class ProjectController extends Controller
 
         return response()->json(['message' => 'Project updated successfully']);
     }
-
 
     /**
      * Remove the specified resource from storage.

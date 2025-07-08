@@ -9,5 +9,5 @@ use Laravel\Socialite\Contracts\User;
 
 interface SocialUserInterface
 {
-  public function createOrUpdateUserViaSocialNetwork(User $socialUser, string $provider): UserModel;
+    public function createOrUpdateUserViaSocialNetwork(User $socialUser, string $provider): UserModel;
 }

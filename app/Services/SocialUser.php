@@ -7,14 +7,15 @@ namespace App\Services;
 use App\Events\SocialUserEvent;
 use App\Models\Network;
 use App\Models\User as UserModel;
+use Illuminate\Contracts\Auth\Factory as AuthInterface;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Contracts\User;
-use Illuminate\Contracts\Auth\Factory as AuthInterface;
 
 final class SocialUser implements SocialUserInterface
 {
     public function __construct(private readonly AuthInterface $auth) {}
+
     public function createOrUpdateUserViaSocialNetwork(User $socialUser, string $provider): UserModel
     {
         $password = null;
@@ -28,7 +29,7 @@ final class SocialUser implements SocialUserInterface
             if ($network) {
                 $email = $network->user->email;
             } else {
-                $email = "stas.ivanov22@mail.ru";
+                $email = 'stas.ivanov22@mail.ru';
 
                 // Редирект на форму с email
             }

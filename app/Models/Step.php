@@ -20,7 +20,7 @@ final class Step extends Model
     ];
 
     protected $casts = [
-        'started_at'  => 'immutable_datetime',
+        'started_at' => 'immutable_datetime',
         'finished_at' => 'immutable_datetime',
     ];
 

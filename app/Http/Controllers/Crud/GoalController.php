@@ -9,13 +9,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Goals\CreateRequest;
 use App\Http\Requests\Goals\UpdateRequest;
 use App\Models\Goal;
-use App\Repository\GoalRepository;
 use App\Repository\GoalRepositoryInterface;
 use App\Repository\ProjectRepositoryInterface;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 final class GoalController extends Controller
 {
@@ -23,6 +21,7 @@ final class GoalController extends Controller
         private ProjectRepositoryInterface $projectRepository,
         private GoalRepositoryInterface $goalRepository
     ) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -44,11 +43,11 @@ final class GoalController extends Controller
      */
     public function store(CreateRequest $request): RedirectResponse
     {
-         $goal = $this->goalRepository->create($request->validated());
-         event(new CreatedGoal($goal));
+        $goal = $this->goalRepository->create($request->validated());
+        event(new CreatedGoal($goal));
 
-         return redirect()->route('projects.show', ['project' => $goal->project_id])
-             ->with('success',  __('Цель успешно добавлена'));
+        return redirect()->route('projects.show', ['project' => $goal->project_id])
+            ->with('success', __('Цель успешно добавлена'));
     }
 
     /**

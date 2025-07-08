@@ -12,7 +12,9 @@ use PhpAmqpLib\Message\AMQPMessage;
 final class RabbitMqService
 {
     private AMQPStreamConnection $connection;
+
     private AbstractChannel|AMQPChannel $channel;
+
     /**
      * @throws \Exception
      */

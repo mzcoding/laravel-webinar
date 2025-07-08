@@ -10,8 +10,12 @@ use Illuminate\Database\Eloquent\Model;
 interface RepositoryInterface
 {
     public function list(): Collection;
+
     public function find(int $id): ?Model;
+
     public function create(array $data): Model;
+
     public function update(Model $model, array $data): bool;
+
     public function delete(Model $model): bool;
 }
